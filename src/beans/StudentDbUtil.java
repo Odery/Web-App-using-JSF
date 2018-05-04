@@ -37,7 +37,7 @@ public class StudentDbUtil {
 
         try {
             connection = source.getConnection();
-            statement = connection.prepareStatement("SELECT * FROM student");
+            statement = connection.prepareStatement("SELECT * FROM student order by last_name");
             set = statement.executeQuery();
 
             while (set.next()){
