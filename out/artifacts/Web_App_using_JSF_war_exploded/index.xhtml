@@ -3,44 +3,44 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+<!-- Load heavy lifting methods, to speed up app in future -->
 <f:metadata>
     <f:event type="preRenderView" listener="#{studentController.loadStudents()}"/>
 </f:metadata>
 
 <h:head>
-    <h:outputStylesheet name="css/main.css"/>
+    <h:outputStylesheet name="css/sty.css"/>
    <title>Home page</title>
 </h:head>
 
 <h:body>
-    <div id ="header">
-            <h2>Student List:</h2>
+    <div id="header">
+        <h2>Student List:</h2>
     </div>
     <hr/><br/>
-
-    <div id="container">
         <div id="content">
-
-    <h:dataTable value="#{studentController.students}" var="tempStudent" id = "customers">
-        <h:column>
-            <f:facet name="header">First Name</f:facet>
-            #{tempStudent.name}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Last Name</f:facet>
-            #{tempStudent.lastName}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Email</f:facet>
-            #{tempStudent.email}
-        </h:column>
+            <h:dataTable value="#{studentController.students}" var="tempStudent" id="customers">
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                    #{tempStudent.id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">First Name</f:facet>
+                    #{tempStudent.name}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Last Name</f:facet>
+                    #{tempStudent.lastName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Email</f:facet>
+                    #{tempStudent.email}
+                </h:column>
     </h:dataTable>
-
-        </div>
-    </div>
-
+        </div><br/><br/>
+        <h:button value = "Add Student" styleClass="addButton" outcome="addStudent"/>
 </h:body>
+
 </html>

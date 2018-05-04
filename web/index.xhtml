@@ -11,7 +11,7 @@
 </f:metadata>
 
 <h:head>
-    <h:outputStylesheet name="css/main.css"/>
+    <h:outputStylesheet name="css/sty.css"/>
    <title>Home page</title>
 </h:head>
 
@@ -20,10 +20,7 @@
         <h2>Student List:</h2>
     </div>
     <hr/><br/>
-
-    <div id="container">
         <div id="content">
-
             <h:dataTable value="#{studentController.students}" var="tempStudent" id="customers">
                 <h:column>
                     <f:facet name="header">ID</f:facet>
@@ -42,9 +39,8 @@
                     #{tempStudent.email}
                 </h:column>
     </h:dataTable>
-
-        </div>
-    </div>
-
+        </div><br/><br/>
+        <h:button value = "Add Student" styleClass="addButton" outcome="addStudent"/>
 </h:body>
+
 </html>

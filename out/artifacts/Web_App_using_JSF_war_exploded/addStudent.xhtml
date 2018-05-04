@@ -2,30 +2,39 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
 
 <h:head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-    <h:outputStylesheet name="css/main.css"/>
+    <h:outputStylesheet name="css/sty.css"/>
 
-   <title>Add Student</title>
+    <title>Add Student</title>
 </h:head>
 
 <h:body>
 
-    <div id ="header">
-            <h2>Add Student: </h2>
+    <div id="header">
+        <h2>Add Student: </h2>
     </div>
-    <hr/><br/>
-    <div id="container">
-        <div id="content">
-            <h:panelGrid
+    <hr/>
+    <br/>
+        <div id="content" align="center">
+            <h:form styleClass="myForm" id = "form">
+                <h:panelGrid columns="3" id = "customers" align = "center">
+                    <h:outputLabel>First Name: </h:outputLabel><h:inputText value="#{student.name}" id="firstName" required="true" requiredMessage="    You name is required!"/><h:message for="firstName" styleClass="err"/>
+                    <h:outputLabel>Last Name: </h:outputLabel><h:inputText value="#{student.lastName}" id="lastName" required="true" requiredMessage="  You name is required!"/><h:message for="lastName" styleClass="err"/>
+                    <h:outputLabel>Email: </h:outputLabel><h:inputText value="#{student.name}" id="email" required="true" requiredMessage="  You email is required!" validatorMessage="Wrong Email!">
+                    <f:validateRegex pattern="\w+@\w+[.][a-z]{2,3}$"/></h:inputText>
+                    <h:message for="email" styleClass="err"/>
+                </h:panelGrid>
+                <br/><br/>
+                <h:commandButton value="Save" styleClass="saveButton" action="#{studentController.addStudent(student)}"/>
+                <br/><br/><br/>
+            </h:form>
+            <h:button styleClass="backButton" value="Back" outcome="index"/>
         </div>
-    </div>
-
 </h:body>
 </html>
