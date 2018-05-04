@@ -1,8 +1,8 @@
 package beans;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.naming.NamingException;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @ManagedBean(name = "studentController")
-@SessionScoped
+@ApplicationScoped
 public class StudentControllerBean {
     private StudentDbUtil dbUtil;
     private List<Student> students;
@@ -22,6 +22,33 @@ public class StudentControllerBean {
 
     public List<Student> getStudents(){
         return students;
+    }
+
+    public void addStudent(Student student) {
+        try {
+            students = dbUtil.addStudent(student);
+        } catch (Exception exc) {
+            logger.log(Level.SEVERE, "Error adding student to db!", exc);
+
+        }
+    }
+
+    public void deleteStudent(Student student) {
+        try {
+            students = dbUtil.addStudent(student);
+        } catch (Exception exc) {
+            logger.log(Level.SEVERE, "Error deleting student from db!", exc);
+
+        }
+    }
+
+    public void updateStudent(Student student) {
+        try {
+            students = dbUtil.updateStudent(student);
+        } catch (Exception exc) {
+            logger.log(Level.SEVERE, "Error deleting student from db!", exc);
+
+        }
     }
 
     public void loadStudents() {

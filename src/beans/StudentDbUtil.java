@@ -4,7 +4,10 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +19,7 @@ public class StudentDbUtil {
         setDataSource();
     }
 
-    public static StudentDbUtil getInstance() throws NamingException {
+    static StudentDbUtil getInstance() throws NamingException {
         if(dbUtil == null){
             dbUtil = new StudentDbUtil();
         }
@@ -28,17 +31,45 @@ public class StudentDbUtil {
         source = (DataSource) context.lookup("java:comp/env/jdbc/tomcat-connection");
     }
 
-    public List<Student> getStudents() throws SQLException {
+    List<Student> getStudents() throws SQLException {
+        return doQuery(null);
+    }
+
+    List<Student> addStudent(Student student) throws SQLException {
+        return doQuery("INSERT INTO student(first_name,last_name,email) VALUE (" +
+                student.getName() + ", " + student.getLastName() + ", " + student.getEmail() + ")");
+    }
+
+    public List<Student> deleteStudent(int id) throws SQLException {
+        return doQuery("DELETE FROM student WHERE id =" + id);
+    }
+
+    public List<Student> updateStudent(Student student) throws SQLException {
+        return doQuery("UPDATE student SET first_name =" + student.getName() +
+                ", last_name =" + student.getLastName() + ", email =" + student.getEmail() +
+                "WHERE id =" + student.getId());
+    }
+
+    private List<Student> doQuery(String sqlQuery) throws SQLException {
         List<Student> students = new ArrayList<>();
 
         Connection connection = null;
-        PreparedStatement statement = null;
+        Statement statement = null;
         ResultSet set = null;
 
         try {
             connection = source.getConnection();
-            statement = connection.prepareStatement("SELECT * FROM student order by last_name");
-            set = statement.executeQuery();
+            connection.setAutoCommit(false);
+
+            statement = connection.createStatement();
+
+            if (sqlQuery != null) {
+                //Executing current Query
+                statement.executeUpdate(sqlQuery);
+            }
+            //Getting Students from db
+            set = statement.executeQuery("SELECT * FROM student");
+            connection.commit();
 
             while (set.next()){
                 Student student = new Student();
@@ -49,9 +80,8 @@ public class StudentDbUtil {
 
                 students.add(student);
             }
-        }catch (SQLException exc){
-            throw exc;
-        }finally {
+
+        } finally {
             close(connection,statement,set);
         }
         return students;
