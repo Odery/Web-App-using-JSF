@@ -36,18 +36,18 @@ public class StudentDbUtil {
     }
 
     List<Student> addStudent(Student student) throws SQLException {
-        return doQuery("INSERT INTO student(first_name,last_name,email) VALUE (" +
-                student.getName() + ", " + student.getLastName() + ", " + student.getEmail() + ")");
+        return doQuery("INSERT INTO student(first_name,last_name,email) VALUE ('" +
+                student.getName() + "', '" + student.getLastName() + "', '" + student.getEmail() + "')");
     }
 
-    public List<Student> deleteStudent(int id) throws SQLException {
+    List<Student> deleteStudent(int id) throws SQLException {
         return doQuery("DELETE FROM student WHERE id =" + id);
     }
 
-    public List<Student> updateStudent(Student student) throws SQLException {
-        return doQuery("UPDATE student SET first_name =" + student.getName() +
-                ", last_name =" + student.getLastName() + ", email =" + student.getEmail() +
-                "WHERE id =" + student.getId());
+    List<Student> updateStudent(Student student) throws SQLException {
+        return doQuery("UPDATE student SET first_name ='" + student.getName() +
+                "', last_name ='" + student.getLastName() + "', email ='" + student.getEmail() +
+                "' WHERE id =" + student.getId());
     }
 
     private List<Student> doQuery(String sqlQuery) throws SQLException {
