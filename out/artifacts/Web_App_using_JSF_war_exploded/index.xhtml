@@ -3,7 +3,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <!-- Load heavy lifting methods, to speed up app in future -->
 <f:metadata>
@@ -12,7 +12,7 @@
 
 <h:head>
     <h:outputStylesheet name="css/sty.css"/>
-   <title>Home page</title>
+   <title>Student list</title>
 </h:head>
 
 <h:body>
@@ -41,12 +41,15 @@
                 <h:column>
                     <f:facet name="header">Action</f:facet>
                     <h:form>
-                    <h:commandLink action="#{studentController.loadStudent(tempStudent.id)}" value="Update"/>
+                    <h:commandLink action="#{studentController.loadStudent(tempStudent.id)}" value="Update"/> |
+                    <h:commandLink action="#{studentController.deleteStudent(tempStudent.id)}" value="Delete" onclick="if(!confirm('Are you sure? Student will be deleted from database!')) return false"/>
                     </h:form>
                 </h:column>
             </h:dataTable>
         </div><br/><br/>
         <h:button value = "Add Student" styleClass="addButton" outcome="addStudent"/>
+
+        <ui:include src="footer.html"/>
 </h:body>
 
 </html>

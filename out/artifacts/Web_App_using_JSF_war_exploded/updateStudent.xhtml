@@ -3,6 +3,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 >
 
 <h:head>
@@ -23,19 +24,24 @@
     <br/>
         <div id="content" align="center">
             <h:form styleClass="myForm" id = "form">
+
                 <h:inputHidden value="#{student.id}" id="id"/>
                 <h:panelGrid columns="3" id = "customers" align = "center">
-                    <h:outputLabel>First Name: </h:outputLabel><h:inputText value="#{student.name}" id="firstName" required="true" requiredMessage="    You name is required!"/><h:message for="firstName" styleClass="err"/>
-                    <h:outputLabel>Last Name: </h:outputLabel><h:inputText value="#{student.lastName}" id="lastName" required="true" requiredMessage="  You name is required!"/><h:message for="lastName" styleClass="err"/>
-                    <h:outputLabel>Email: </h:outputLabel><h:inputText value="#{student.email}" id="email" required="true" requiredMessage="  You email is required!" validatorMessage="Wrong Email!">
+                    <h:outputLabel>First Name: </h:outputLabel><h:inputText value="#{student.name}" id="firstName" required="true" requiredMessage="Name is required!"/><h:message for="firstName" styleClass="err"/>
+                    <h:outputLabel>Last Name: </h:outputLabel><h:inputText value="#{student.lastName}" id="lastName" required="true" requiredMessage="Name is required!"/><h:message for="lastName" styleClass="err"/>
+                    <h:outputLabel>Email: </h:outputLabel><h:inputText value="#{student.email}" id="email" required="true" requiredMessage="Email is required!" validatorMessage="Wrong Email!">
                     <f:validateRegex pattern="\w+@\w+[.][a-z]{2,3}$"/></h:inputText>
                     <h:message for="email" styleClass="err"/>
                 </h:panelGrid>
                 <br/><br/>
+
                 <h:commandButton value="Update" styleClass="saveButton" action="#{studentController.updateStudent(student)}"/>
                 <br/><br/>
+
             </h:form>
             <h:button styleClass="backButton" value="Back" outcome="index"/>
         </div>
+
+        <ui:include src="footer.html"/>
 </h:body>
 </html>

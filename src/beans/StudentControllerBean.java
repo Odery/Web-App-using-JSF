@@ -1,7 +1,5 @@
 package beans;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -39,12 +37,11 @@ public class StudentControllerBean {
         }
     }
 
-    public void deleteStudent(Student student) {
+    public void deleteStudent(int id) {
         try {
-            students = dbUtil.addStudent(student);
+            students = dbUtil.deleteStudent(id);
         } catch (Exception exc) {
             logger.log(Level.SEVERE, "Error deleting student from db!", exc);
-
         }
     }
 
@@ -80,7 +77,7 @@ public class StudentControllerBean {
         }
     }
 
-    private Student getStudent(int id) throws Exception{
+    private Student getStudent(int id) {
         Student student = null;
 
         for (Student temp : students){
