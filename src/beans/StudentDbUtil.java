@@ -31,26 +31,26 @@ public class StudentDbUtil {
         source = (DataSource) context.lookup("java:comp/env/jdbc/tomcat-connection");
     }
 
-    List<Student> getStudents() throws SQLException {
-        return doQuery(null);
+    List<Student> getStudents(String searchLName) throws SQLException {
+        return doQuery(null, searchLName);
     }
 
     List<Student> addStudent(Student student) throws SQLException {
         return doQuery("INSERT INTO student(first_name,last_name,email) VALUE ('" +
-                student.getName() + "', '" + student.getLastName() + "', '" + student.getEmail() + "')");
+                student.getName() + "', '" + student.getLastName() + "', '" + student.getEmail() + "')", null);
     }
 
     List<Student> deleteStudent(int id) throws SQLException {
-        return doQuery("DELETE FROM student WHERE id =" + id);
+        return doQuery("DELETE FROM student WHERE id =" + id, null);
     }
 
     List<Student> updateStudent(Student student) throws SQLException {
         return doQuery("UPDATE student SET first_name ='" + student.getName() +
                 "', last_name ='" + student.getLastName() + "', email ='" + student.getEmail() +
-                "' WHERE id =" + student.getId());
+                "' WHERE id =" + student.getId(), null);
     }
 
-    private List<Student> doQuery(String sqlQuery) throws SQLException {
+    private List<Student> doQuery(String sqlQuery, String searchLName) throws SQLException {
         List<Student> students = new ArrayList<>();
 
         Connection connection = null;
@@ -68,7 +68,11 @@ public class StudentDbUtil {
                 statement.executeUpdate(sqlQuery);
             }
             //Getting Students from db
-            set = statement.executeQuery("SELECT * FROM student");
+            if (searchLName != null && !searchLName.isEmpty()) {
+                set = statement.executeQuery("SELECT * FROM student WHERE last_name LIKE '%" + searchLName + "%'");
+            } else {
+                set = statement.executeQuery("SELECT * FROM student");
+            }
             connection.commit();
 
             while (set.next()){

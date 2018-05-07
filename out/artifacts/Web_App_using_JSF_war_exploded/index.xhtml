@@ -11,8 +11,9 @@
 </f:metadata>
 
 <h:head>
-    <h:outputStylesheet name="css/sty.css"/>
-   <title>Student list</title>
+    <h:outputStylesheet name="css/styleMain.css"/>
+
+    <title>Student list</title>
 </h:head>
 
 <h:body>
@@ -20,6 +21,17 @@
         <h2>Student List:</h2>
     </div>
     <hr/><br/>
+    <div style="margin-bottom: 8%;">
+        <div style="float: right">
+    <h:button value = "Add Student" styleClass="addButton" outcome="addStudent"/>
+        </div>
+        <div style="float: left">
+    <h:form styleClass="">
+        <h:outputLabel>Search by Last Name: </h:outputLabel><h:inputText value="#{studentController.searchLName}" id = "searchLastName"/>
+        <h:commandButton value="Search" action="index?faces-redirect=true" styleClass="backButton"/>
+    </h:form>
+        </div>
+    </div>
         <div id="content">
             <h:dataTable value="#{studentController.students}" var="tempStudent" id="customers">
                 <h:column>
@@ -41,15 +53,15 @@
                 <h:column>
                     <f:facet name="header">Action</f:facet>
                     <h:form>
-                    <h:commandLink action="#{studentController.loadStudent(tempStudent.id)}" value="Update"/> |
-                    <h:commandLink action="#{studentController.deleteStudent(tempStudent.id)}" value="Delete" onclick="if(!confirm('Are you sure? Student will be deleted from database!')) return false"/>
+                        <h:commandLink action="#{studentController.loadStudent(tempStudent.id)}" value="Update"/> |
+                        <h:commandLink action="#{studentController.deleteStudent(tempStudent.id)}" value="Delete"
+                                       onclick="if(!confirm('Are you sure? Student will be deleted from database!')) return false"/>
                     </h:form>
                 </h:column>
             </h:dataTable>
-        </div><br/><br/>
-        <h:button value = "Add Student" styleClass="addButton" outcome="addStudent"/>
+        </div>
 
-        <ui:include src="footer.html"/>
+    <ui:include src="footer.html"/>
 </h:body>
 
 </html>

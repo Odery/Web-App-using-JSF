@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 @ManagedBean(name = "studentController")
 @SessionScoped
 public class StudentControllerBean {
+    public String searchLName;
     public String indexUrl = "index.xhtml";
 
     private StudentDbUtil dbUtil;
@@ -57,7 +58,7 @@ public class StudentControllerBean {
 
     public void loadStudents() {
         try {
-            students = dbUtil.getStudents();
+            students = dbUtil.getStudents(searchLName);
         }catch (Exception exc){
             logger.log(Level.SEVERE,"Error loading students from db!",exc);
 
@@ -88,5 +89,13 @@ public class StudentControllerBean {
         }
 
         return student;
+    }
+
+    public String getSearchLName() {
+        return searchLName;
+    }
+
+    public void setSearchLName(String searchLName) {
+        this.searchLName = searchLName;
     }
 }
